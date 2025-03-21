@@ -1,25 +1,39 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { Layout } from "antd";
+import Navbar from "./components/Header";
+import Home from "./pages/Home";
+import MenuPage from "./components/Menu";
+import About from "./pages/About";
+import AppFooter from "./components/Footer";
+import { CartProvider } from "./context/CartContext.tsx";
+
+const { Content } = Layout;
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+    <CartProvider>
+      <Router>
+        <Layout
+          style={{
+            minHeight: "100vh",
+            display: "flex",
+            flexDirection: "column",
+          }}
         >
-          Learn React
-        </a>
-      </header>
-    </div>
+          <Navbar brandName="Lina’s Café" />
+
+          <Content style={{ flex: 1, padding: "20px", textAlign: "center" }}>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/menu" element={<MenuPage />} />
+              <Route path="/about" element={<About />} />
+            </Routes>
+          </Content>
+
+          <AppFooter />
+        </Layout>
+      </Router>
+    </CartProvider>
   );
 }
 
